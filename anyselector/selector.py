@@ -11,8 +11,13 @@ class Selector:
     def __init__(self, select_func):
         self._select_func = select_func
 
-    def __call__(self, *args, **kwargs):
+    def select(self, *args, **kwargs):
+        '''
+        select value.
+        '''
         return self._select_func(*args, **kwargs)
+
+    __call__ = select
 
     def attr(self, name):
         '''
@@ -33,6 +38,17 @@ class Selector:
             lambda *args, **kwargs:
             self._select_func(*args, **kwargs)[index]
         )
+
+    def call_with(self, *args, **kwargs):
+        '''
+        then select by `__call__(*args, **kwargs)`.
+        '''
+
+        return Selector(
+            lambda *args_, **kwargs_:
+            self._select_func(*args_, **kwargs_)(*args, **kwargs)
+        )
+
 
 def _ensure_single_args(*args, **kwargs):
     if kwargs:
@@ -58,3 +74,9 @@ def item(index):
     require single args.
     '''
     return _single_selector.item(index)
+
+def const(value):
+    '''
+    select by const value.
+    '''
+    return Selector(lambda *args, **kwargs: value)

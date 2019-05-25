@@ -5,5 +5,5 @@
 #
 # ----------
 
-from .selector import attr, item
+from .selector import attr, item, const
 from .argselector import self, arg, kwarg
