@@ -16,6 +16,10 @@ def test_select_arg():
 def test_select_kwarg():
     assert kwarg('k')(k=15) == 15
 
+def test_select_complex():
+    selector = arg(0).item(arg(1))
+    assert selector([7, 77, 777, 7777, 77777], 2) == 777
+
 def test_select_then_attr():
     class C:
         val = 15

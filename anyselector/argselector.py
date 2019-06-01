@@ -32,4 +32,3 @@ def self():
     equals `arg(0)`.
     '''
     return arg(0)
-
